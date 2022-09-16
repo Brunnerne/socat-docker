@@ -1,0 +1,13 @@
+#!/bin/sh
+
+test -f /app/challbin || (echo "No file supplied, see readme" && exit 1)
+
+echo "Copying ${CHALLBIN} to /"
+
+cp "/app/${CHALLBIN}" "/${CHALLBIN}" && chmod +x "/${CHALLBIN}"
+
+echo "Running ${CHALLBIN}... on port ${PORT}"
+
+# Optionally copy flag as well if it exists
+
+socat tcp-l:${PORT},reuseaddr,fork EXEC:/${CHALLBIN},pty,echo=0,raw,iexten=0
